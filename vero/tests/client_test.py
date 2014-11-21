@@ -116,6 +116,16 @@ class VeroEventLoggerTests(unittest.TestCase):
 
         self.assertEqual(req.status_code, requests.codes.ok)
 
+    def test_resubscribe_user(self):
+        req = self.logger.resubscribe_user(self.user_id)
+
+        self.assertEqual(req.status_code, requests.codes.ok)
+
+    def test_resubscribe_user__development_mode(self):
+        req = self.logger.unsubscribe_user(self.user_id, development_mode=True)
+
+        self.assertEqual(req.status_code, requests.codes.ok)
+
     def test_add_event(self):
         req = self.logger.add_event(self.event_name, self.event_data, self.user_id)
 

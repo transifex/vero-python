@@ -12,6 +12,7 @@ class VeroEndpoints(object):
     EDIT_USER = Endpoint(method='PUT', url=VERO_BASE_URL + 'api/v2/users/edit')
     EDIT_TAGS = Endpoint(method='PUT', url=VERO_BASE_URL + 'api/v2/users/tags/edit')
     UNSUBSCRIBE_USER = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/users/unsubscribe')
+    RESUBSCRIBE_USER = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/users/resubscribe')
     ADD_EVENT = Endpoint(method='POST', url=VERO_BASE_URL + 'api/v2/events/track')
 
 
@@ -75,6 +76,15 @@ class VeroEventLogger(object):
             'development_mode': development_mode
         }
         return self._fire_request(VeroEndpoints.UNSUBSCRIBE_USER, payload)
+
+    def resubscribe_user(self, user_id, development_mode=False):
+        """Resubscribe an existing user and return the https request."""
+        payload = {
+            'auth_token': self.auth_token,
+            'id': user_id,
+            'development_mode': development_mode
+        }
+        return self._fire_request(VeroEndpoints.RESUBSCRIBE_USER, payload)
 
     def add_event(self, event_name, event_data, user_id, user_email=None, development_mode=False):
         """Add a new event and return the https request."""
